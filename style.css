@@ -1,0 +1,47 @@
+body {
+    font-family: Arial;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.sub-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.img-overview {
+    width: 280px;
+}
+
+.select-choice {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px;
+    margin: 40px 0px 5px 0px;
+}
+
+.move-button {
+    width: 90px;
+    height: 90px;
+    border: none;
+    background-color: transparent;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.move-icon {
+    height: 90px;
+}
+
+.move-result-icon {
+    height: 40px;
+}
