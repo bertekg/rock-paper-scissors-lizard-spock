@@ -4,6 +4,7 @@ const tieMessage = '&#128528; Tie &#128528;';
 
 let isAutoPlaying = false;
 let intervalId;
+let duringRequestReset = false;
 
 let score = JSON.parse(localStorage.getItem('score')) || {
     wins: 0,
@@ -102,8 +103,7 @@ function resetScore() {
 function autoPlay() {
     isAutoPlaying = !isAutoPlaying;
 
-    if(isAutoPlaying)
-    {
+    if (isAutoPlaying) {
         intervalId = setInterval(() => {
             const fakePlayerMove = pickComputerMove();
             playGame(fakePlayerMove);
@@ -145,20 +145,33 @@ document.querySelector('.js-auto-play-button').addEventListener('click', () => {
 
 document.body.addEventListener('keydown', (event) => {
     switch (event.key) {
-        case 'r':
+        case '1':
             playGame('rock');
             break;
-        case 'p':
+        case '2':
             playGame('paper');
             break;
-        case 's':
+        case '3':
             playGame('scissors');
             break;
-        case 'a':
+        case '4':
+            playGame('lizard');
+            break;
+        case '5':
+            playGame('spock');
+            break;
+        case ' ':
+        case 'Enter':
             autoPlay();
             break;
         case 'Backspace':
             requestReset();
+            break;
+        case 'y':
+            performReset();
+            break;
+        case 'n':
+            cancelReset();
             break;
     }
 });
@@ -166,10 +179,19 @@ document.body.addEventListener('keydown', (event) => {
 function requestReset() {
     document.querySelector('.js-resetconfirmation').innerHTML = `
     Are you sure you want to reset the score?
-    <button class="reset-confrimation-button" onclick="resetScore(); cancelReset();">Yes</button>
+    <button class="reset-confrimation-button" onclick="performReset();">Yes</button>
     <button class="reset-confrimation-button" onclick="cancelReset();">No</button>`
+    duringRequestReset = true;
+}
+
+function performReset() {
+    if (!duringRequestReset) return;
+    resetScore();
+    cancelReset();
 }
 
 function cancelReset() {
+    if (!duringRequestReset) return;
     document.querySelector('.js-resetconfirmation').innerHTML = '';
+    duringRequestReset = false;
 }
